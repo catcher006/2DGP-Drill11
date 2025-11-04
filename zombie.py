@@ -2,6 +2,7 @@ import random
 import math
 import game_framework
 import game_world
+import ball
 
 from pico2d import *
 
@@ -33,6 +34,7 @@ class Zombie:
         self.load_images()
         self.frame = random.randint(0, 9)
         self.dir = random.choice([-1,1])
+        self.hit = 0
 
 
     def get_bb(self):
@@ -51,14 +53,15 @@ class Zombie:
 
     def draw(self):
         if self.dir < 0:
-            Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 200, 200)
+            Zombie.images['Walk'][int(self.frame)].composite_draw(0, 'h', self.x, self.y, 200 // (self.hit + 1), 200 // (self.hit + 1))
         else:
-            Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, 200, 200)
+            Zombie.images['Walk'][int(self.frame)].draw(self.x, self.y, 200 // (self.hit + 1), 200 // (self.hit + 1))
         draw_rectangle(*self.get_bb())
 
     def handle_event(self, event):
         pass
 
     def handle_collision(self, group, other):
-        pass
+        if group == 'zombie:ball' and other.stopped != True:
+            self.hit += 1
 
