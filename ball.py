@@ -41,4 +41,5 @@ class Ball:
         elif group == 'zombie:ball':
             if self.stopped != True:
                 print('Zombie Hit!')
+                game_world.remove_object(self)
 
