@@ -26,6 +26,7 @@ def init():
 
     grass = Grass()
     game_world.add_object(grass, 0)
+    game_world.add_collision_pair('grass:ball', grass, None)
 
     boy = Boy()
     game_world.add_object(boy, 1)
@@ -34,15 +35,17 @@ def init():
     balls = [Ball(random.randint(100, 1600-100), 60, 0) for i in range(10)]
     game_world.add_objects(balls, 1)
 
+    # 소년과 볼 사이에 대한 충돌 검사가 필요하다는 정보를 추가
+    game_world.add_collision_pair('boy:ball', boy, None)
+    for ball in balls:
+        game_world.add_collision_pair('boy:ball', None, ball)
+
+    zombies = [Zombie() for _ in range(4)]
+    game_world.add_objects(zombies, 1)
+
 def update():
     game_world.update()
-
-    for ball in balls:
-        if game_world.collide(boy, ball):
-            print("COLLISION boy : ball")
-            boy.ball_count += 1
-            game_world.remove_object(ball)
-            balls.remove(ball) # 게임 월드에서 삭제를 시키고 balls 리스트에서도 삭제를 시켜줘야함
+    game_world.handle_collsions()
 
 
 def draw():

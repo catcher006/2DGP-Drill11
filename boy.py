@@ -178,5 +178,13 @@ class Boy:
             ball = Ball(self.x+self.face_dir*40, self.y+100, self.face_dir * 15)
             game_world.add_object(ball, 1)
 
+            game_world.add_collision_pair('grass:ball', None, ball) # grass와 ball 충돌 검사 정보 추가
+            game_world.add_collision_pair('boy:ball', None, ball)
+            game_world.add_collision_pair('zombie:ball', None, ball)
+
     def get_bb(self):
         return self.x - 20, self.y - 50, self.x + 20, self.y + 40
+
+    def handle_collision(self, group, other):
+        if group == 'boy:ball':
+            self.ball_count += 1
