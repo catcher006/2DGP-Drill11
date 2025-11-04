@@ -35,6 +35,7 @@ class Zombie:
         self.frame = random.randint(0, 9)
         self.dir = random.choice([-1,1])
         self.hit = 0
+        self.dead = 0
 
 
     def get_bb(self):
@@ -66,6 +67,10 @@ class Zombie:
             self.hit += 1
 
             if self.hit >= 2:
-                print('Zombie Dead!')
+                self.dead += 1
+                print(f'Zombie Dead! {self.dead}')
                 game_world.remove_object(self)
+
+        if self.dead > 3:
+            game_framework.quit()
 
