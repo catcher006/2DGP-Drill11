@@ -65,3 +65,7 @@ class Zombie:
         if group == 'zombie:ball' and other.stopped != True:
             self.hit += 1
 
+            if self.hit >= 2:
+                print('Zombie Dead!')
+                game_world.remove_object(self)
+
