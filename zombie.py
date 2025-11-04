@@ -1,3 +1,4 @@
+# 2022184020 게임공학과 서성호
 import random
 import math
 import game_framework
