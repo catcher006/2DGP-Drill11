@@ -30,9 +30,19 @@ def init():
     boy = Boy()
     game_world.add_object(boy, 1)
 
+    global balls
+    balls = [Ball(random.randint(100, 1600-100), 60, 0) for i in range(10)]
+    game_world.add_objects(balls, 1)
 
 def update():
     game_world.update()
+
+    for ball in balls:
+        if game_world.collide(boy, ball):
+            print("COLLISION boy : ball")
+            boy.ball_count += 1
+            game_world.remove_object(ball)
+            balls.remove(ball) # 게임 월드에서 삭제를 시키고 balls 리스트에서도 삭제를 시켜줘야함
 
 
 def draw():
